@@ -5,7 +5,7 @@
 
 ini adalah Jupyter Book Miko yang berisi tentang Materi Komputasi Aljabar Linear semester 2. 
 
-Semoga materi ini bermanfaat bagi pembaca.
+Semoga materi ini bermanfaat bagi pembaca.
 
 ```{tableofcontents}
 ```
