@@ -29,7 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
@@ -46,7 +46,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -213,9 +213,9 @@
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -383,6 +383,135 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="page-rank">
 <h1>page rank<a class="headerlink" href="#page-rank" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="p">([[</span><span class="mf">0.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="p">([[</span><span class="mf">0.37</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.08</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.33</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.20</span><span class="p">]])</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.0925]
+ [0.02  ]
+ [0.0825]
+ [0.05  ]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">V0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="p">([[</span><span class="mf">0.25</span><span class="p">],[</span><span class="mf">0.25</span><span class="p">],[</span><span class="mf">0.25</span><span class="p">],[</span><span class="mf">0.25</span><span class="p">]])</span>
+<span class="n">V1</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V1</span><span class="p">)</span>
+<span class="n">V2</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V2</span><span class="p">)</span>
+<span class="n">V3</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V3</span><span class="p">)</span>
+<span class="n">V4</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V4</span><span class="p">)</span>
+<span class="n">V5</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V5</span><span class="p">)</span>
+<span class="n">V6</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V6</span><span class="p">)</span>
+<span class="n">V7</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V6</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V7</span><span class="p">)</span>
+<span class="n">V8</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V7</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V8</span><span class="p">)</span>
+<span class="n">V0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="p">([[</span><span class="mf">0.3</span><span class="p">],[</span><span class="mf">0.2</span><span class="p">],[</span><span class="mf">0.3</span><span class="p">],[</span><span class="mf">0.2</span><span class="p">]])</span>
+<span class="n">V1</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V1</span><span class="p">)</span>
+<span class="n">V2</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V2</span><span class="p">)</span>
+<span class="n">V3</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V3</span><span class="p">)</span>
+<span class="n">V4</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V4</span><span class="p">)</span>
+<span class="n">V5</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V5</span><span class="p">)</span>
+<span class="n">V6</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V6</span><span class="p">)</span>
+<span class="n">V7</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V6</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V7</span><span class="p">)</span>
+<span class="n">V8</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V7</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.375     ]
+ [0.08333333]
+ [0.33333333]
+ [0.20833333]]
+[[0.4375    ]
+ [0.125     ]
+ [0.27083333]
+ [0.16666667]]
+[[0.35416667]
+ [0.14583333]
+ [0.29166667]
+ [0.20833333]]
+[[0.39583333]
+ [0.11805556]
+ [0.29513889]
+ [0.19097222]]
+[[0.390625  ]
+ [0.13194444]
+ [0.28645833]
+ [0.19097222]]
+[[0.38194444]
+ [0.13020833]
+ [0.29166667]
+ [0.19618056]]
+[[0.38975694]
+ [0.12731481]
+ [0.29050926]
+ [0.19241898]]
+[[0.38671875]
+ [0.12991898]
+ [0.28978588]
+ [0.19357639]]
+[[0.4]
+ [0.1]
+ [0.3]
+ [0.2]]
+[[0.4       ]
+ [0.13333333]
+ [0.28333333]
+ [0.18333333]]
+[[0.375     ]
+ [0.13333333]
+ [0.29166667]
+ [0.2       ]]
+[[0.39166667]
+ [0.125     ]
+ [0.29166667]
+ [0.19166667]]
+[[0.3875    ]
+ [0.13055556]
+ [0.28888889]
+ [0.19305556]]
+[[0.38541667]
+ [0.12916667]
+ [0.29097222]
+ [0.19444444]]
+[[0.38819444]
+ [0.12847222]
+ [0.29027778]
+ [0.19305556]]
+[[0.38680556]
+ [0.12939815]
+ [0.29016204]
+ [0.19363426]]
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
